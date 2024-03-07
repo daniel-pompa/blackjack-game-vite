@@ -1,7 +1,10 @@
-import { calculateHandScore } from './usecases/calculate-score';
-import { createDeck } from './usecases/create-deck';
-import { dealInitialCards } from './usecases/deal-initial-cards';
-import { drawCard } from './usecases/draw-card';
+import {
+  calculateHandScore,
+  createDeck,
+  dealInitialCards,
+  drawCard,
+  renderHand,
+} from './usecases';
 
 //* Constants
 const suits = ['C', 'D', 'H', 'S']; // Define an array of card suits
@@ -16,23 +19,32 @@ let dealerScore = 0; // Initialize dealer's score to 0
 
 //* HTML references
 const drawCardButton = document.querySelector('#draw-card-button');
+const cardsContainerHTML = document.querySelectorAll('.cards-container');
+const [playerScoreHTML, dealerScoreHTML] = document.querySelectorAll('span');
 
 // Initializes the game by creating a deck, and dealing initial cards to player and dealer
 const initializeGame = () => {
   deck = createDeck(suits, specials);
-  dealInitialCards(deck, playerHand, playerScore, dealerHand, dealerScore);
+  dealInitialCards(
+    deck,
+    playerHand,
+    playerScore,
+    dealerHand,
+    dealerScore,
+    cardsContainerHTML,
+    playerScoreHTML,
+    dealerScoreHTML
+  );
 };
 
 //* Event listeners
-// Event listener for draw card button
+// Event listener for when the draw card button is clicked
 drawCardButton.addEventListener('click', () => {
   const card = drawCard(deck);
   playerHand.push(card);
   playerScore = calculateHandScore(playerHand);
-  // TODO render player hand and score in the DOM
-  console.log('Mano del jugador:', playerHand);
-  console.log('Puntuación del jugador:', playerScore);
-  // Check if the player has gone over 21 or has reached 21
+  renderHand(playerHand, cardsContainerHTML[0]);
+  playerScoreHTML.innerText = playerScore;
   if (playerScore > 21 || playerScore === 21) {
     // TODO disable the buttons for actions
     console.log('Botones deshabilitados');
