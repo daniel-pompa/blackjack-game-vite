@@ -1,10 +1,10 @@
+import { getCardValue } from './card-value';
+
 /**
  * Calculate total score based on the hand of cards provided
  * @param {Array<string>} hand - An array of cards
- * @returns {number} - Total score calculated from the hand
+ * @returns {Number} - Total score calculated from the hand
  */
-import { getCardValue } from './card-value';
-
 export const calculateHandScore = hand => {
   let totalScore = 0;
   let numberOfAces = 0;

@@ -1,7 +1,7 @@
 /**
  * Draws a card from the deck
  * @param {Array<String>} deck - The deck of cards
- * @returns {string} The card drawn from the deck
+ * @returns {String} The card drawn from the deck
  * @throws {Error} If the deck is empty
  */
 export const drawCard = deck => {
