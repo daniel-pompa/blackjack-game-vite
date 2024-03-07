@@ -1,10 +1,23 @@
 /**
- * Creates a deck of cards using the provided suits and specials
- * @param {Array<String>} suits - The array of suits to use in the deck
- * @param {Array<String>} specials - The array of special card names to use
- * @returns {Array<String>} - The shuffled deck of cards
+ * Creates a deck of cards based on the provided suits and special cards
+ *
+ * @param {Array<String>} suits - An array of suits for the deck
+ * @param {Array<String>} specials - An array of special cards for the deck
+ * @returns {Array<String>} - A shuffled deck of cards
+ * @throws {Error} - If suits or specials are not provided, or if they are not arrays
  */
 export const createDeck = (suits, specials) => {
+  // Validate input suits and specials cards
+  if (!suits || suits.length === 0) {
+    throw new Error('Debe proporcionar los palos de la baraja');
+  }
+  if (!specials || specials.length === 0) {
+    throw new Error('Debe proporcionar las cartas especiales de la baraja');
+  }
+  if (!Array.isArray(suits) || !Array.isArray(specials)) {
+    throw new Error('Los palos y las cartas especiales de la baraja deben ser arrays');
+  }
+  // Create a new deck of cards
   let deck = [];
   suits.forEach(suit => {
     specials.forEach(special => {
@@ -14,6 +27,7 @@ export const createDeck = (suits, specials) => {
       deck.push(`${i}${suit}`);
     }
   });
+  // Shuffle the deck before returning
   return shuffle(deck);
 };
 
