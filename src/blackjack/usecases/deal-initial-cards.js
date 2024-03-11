@@ -1,4 +1,5 @@
 import { calculateHandScore } from './calculate-score';
+import { dealerTurn } from './dealer-turn';
 import { renderHand } from './render-card-images';
 
 /**
@@ -11,6 +12,8 @@ import { renderHand } from './render-card-images';
  * @param {HTMLElement[]} cardsContainerHTML - Array of HTML elements to render cards
  * @param {HTMLElement} playerScoreHTML - HTML element to render player score
  * @param {HTMLElement} dealerScoreHTML - HTML element to render dealer score
+ * @param {HTMLButtonElement} drawCardButton - HTML button for drawing a card
+ * @param {HTMLButtonElement} standButton - HTML button for standing
  */
 export const dealInitialCards = (
   deck,
@@ -20,7 +23,9 @@ export const dealInitialCards = (
   dealerScore,
   cardsContainerHTML,
   playerScoreHTML,
-  dealerScoreHTML
+  dealerScoreHTML,
+  drawCardButton,
+  standButton
 ) => {
   // Deal 2 cards to the player and the dealer
   for (let i = 0; i < 2; i++) {
@@ -35,8 +40,26 @@ export const dealInitialCards = (
   renderHand(dealerHand, cardsContainerHTML[1]);
   playerScoreHTML.innerText = playerScore;
   dealerScoreHTML.innerText = dealerScore;
+  if (playerScore === 21 && dealerScore === 21) {
+    drawCardButton.disabled = true;
+    standButton.disabled = true;
+    console.log('¡Es un empate!');
+    return;
+  }
   if (playerScore === 21) {
-    console.log('¡Blackjack!');
-    // TODO Disable the buttons for actions and take the dealer's turn
+    drawCardButton.disabled = true;
+    standButton.disabled = true;
+    setTimeout(
+      () =>
+        dealerTurn(
+          deck,
+          dealerHand,
+          cardsContainerHTML[1],
+          dealerScoreHTML,
+          dealerScore,
+          playerScore
+        ),
+      1000
+    );
   }
 };

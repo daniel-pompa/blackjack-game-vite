@@ -2,6 +2,7 @@ import {
   calculateHandScore,
   createDeck,
   dealInitialCards,
+  dealerTurn,
   drawCard,
   renderHand,
 } from './usecases';
@@ -19,6 +20,7 @@ let dealerScore = 0; // Initialize dealer's score to 0
 
 //* HTML references
 const drawCardButton = document.querySelector('#draw-card-button');
+const standButton = document.querySelector('#stand-button');
 const cardsContainerHTML = document.querySelectorAll('.cards-container');
 const [playerScoreHTML, dealerScoreHTML] = document.querySelectorAll('span');
 
@@ -33,7 +35,9 @@ const initializeGame = () => {
     dealerScore,
     cardsContainerHTML,
     playerScoreHTML,
-    dealerScoreHTML
+    dealerScoreHTML,
+    drawCardButton,
+    standButton
   );
 };
 
@@ -45,15 +49,42 @@ drawCardButton.addEventListener('click', () => {
   playerScore = calculateHandScore(playerHand);
   renderHand(playerHand, cardsContainerHTML[0]);
   playerScoreHTML.innerText = playerScore;
-  if (playerScore > 21 || playerScore === 21) {
-    // TODO disable the buttons for actions
-    console.log('Botones deshabilitados');
-    if (playerScore > 21) {
-      console.log('El jugador se ha pasado de 21. La banca gana.');
-    } else {
-      // TODO take the dealer's turn
-      console.log('Turno de la banca');
-    }
+  if (playerScore > 21) {
+    drawCardButton.disabled = true;
+    standButton.disabled = true;
+    console.log('El jugador se pasa de 21. La banca gana.');
+  } else if (playerScore === 21) {
+    drawCardButton.disabled = true;
+    standButton.disabled = true;
+    dealerTurn(
+      deck,
+      dealerHand,
+      cardsContainerHTML[1],
+      dealerScoreHTML,
+      dealerScore,
+      playerScore
+    );
+  }
+});
+
+// Event listener for when the stand button is clicked
+standButton.addEventListener('click', () => {
+  drawCardButton.disabled = true;
+  standButton.disabled = true;
+  playerScore = calculateHandScore(playerHand);
+  dealerScore = calculateHandScore(dealerHand);
+  if (dealerScore > playerScore || (playerScore === dealerScore && dealerScore >= 17)) {
+    // TODO create function to display the respective message
+    console.log('La banca gana o es un empate.');
+  } else {
+    dealerTurn(
+      deck,
+      dealerHand,
+      cardsContainerHTML[1],
+      dealerScoreHTML,
+      dealerScore,
+      playerScore
+    );
   }
 });
 
