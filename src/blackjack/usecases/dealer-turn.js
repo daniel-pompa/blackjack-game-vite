@@ -1,5 +1,4 @@
-import { calculateHandScore } from './calculate-score';
-import { renderHand } from './render-card-images';
+import { calculateHandScore, determineWinner, renderHand } from './';
 
 /**
  * Simulates the dealer's turn
@@ -25,7 +24,6 @@ export const dealerTurn = (
   if (!dealerHand) throw new Error('Se requiere la mano del crupier');
   if (!cardsContainerHTML) throw new Error('Se requiere el contenedor de las cartas');
   if (!dealerScoreHTML) throw new Error('Se requiere el contenedor de la puntuación del crupier');
-
   // Dealer draws cards until the minimum score is achieved
   do {
     const card = deck.pop();
@@ -36,17 +34,5 @@ export const dealerTurn = (
     // If the minimum score exceeds 21, stop drawing cards
     if (minScore > 21) break;
   } while (dealerScore < minScore && minScore <= 21);
-
-  // TODO create function to display the respective message
-  if (minScore > 21) {
-    console.log('El jugador se pasa de 21. La banca gana.');
-  } else if (dealerScore > 21) {
-    console.log('La banca se pasa de 21. El jugador gana.');
-  } else if (minScore > dealerScore) {
-    console.log('¡El jugador gana!');
-  } else if (dealerScore > minScore) {
-    console.log('¡La banca gana!');
-  } else {
-    console.log('¡Es un empate!');
-  }
+  determineWinner(minScore, dealerScore);
 };

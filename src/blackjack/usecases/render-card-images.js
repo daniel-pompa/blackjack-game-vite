@@ -8,7 +8,6 @@ export const renderHand = (hand, container) => {
   while (container.firstChild) {
     container.removeChild(container.firstChild);
   }
-
   // Render each card in the hand
   hand.forEach(card => {
     const cardImage = document.createElement('img');

@@ -1,6 +1,4 @@
-import { calculateHandScore } from './calculate-score';
-import { dealerTurn } from './dealer-turn';
-import { renderHand } from './render-card-images';
+import { calculateHandScore, dealerTurn, determineWinner, renderHand } from './';
 
 /**
  * Deals initial cards to the player and dealer, calculates their scores
@@ -43,7 +41,7 @@ export const dealInitialCards = (
   if (playerScore === 21 && dealerScore === 21) {
     drawCardButton.disabled = true;
     standButton.disabled = true;
-    console.log('¡Es un empate!');
+    determineWinner(playerScore, dealerScore);
     return;
   }
   if (playerScore === 21) {

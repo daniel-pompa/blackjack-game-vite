@@ -3,6 +3,7 @@ import {
   createDeck,
   dealInitialCards,
   dealerTurn,
+  determineWinner,
   drawCard,
   renderHand,
 } from './usecases';
@@ -52,7 +53,7 @@ drawCardButton.addEventListener('click', () => {
   if (playerScore > 21) {
     drawCardButton.disabled = true;
     standButton.disabled = true;
-    console.log('El jugador se pasa de 21. La banca gana.');
+    determineWinner(playerScore, dealerScore);
   } else if (playerScore === 21) {
     drawCardButton.disabled = true;
     standButton.disabled = true;
@@ -74,8 +75,7 @@ standButton.addEventListener('click', () => {
   playerScore = calculateHandScore(playerHand);
   dealerScore = calculateHandScore(dealerHand);
   if (dealerScore > playerScore || (playerScore === dealerScore && dealerScore >= 17)) {
-    // TODO create function to display the respective message
-    console.log('La banca gana o es un empate.');
+    determineWinner(playerScore, dealerScore);
   } else {
     dealerTurn(
       deck,
