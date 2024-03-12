@@ -22,11 +22,13 @@ let dealerScore = 0; // Initialize dealer's score to 0
 //* HTML references
 const drawCardButton = document.querySelector('#draw-card-button');
 const standButton = document.querySelector('#stand-button');
+const newGameButton = document.querySelector('#new-game-button');
 const cardsContainerHTML = document.querySelectorAll('.cards-container');
 const [playerScoreHTML, dealerScoreHTML] = document.querySelectorAll('span');
 
 // Initializes the game by creating a deck, and dealing initial cards to player and dealer
 const initializeGame = () => {
+  resetGame();
   deck = createDeck(suits, specials);
   dealInitialCards(
     deck,
@@ -87,5 +89,22 @@ standButton.addEventListener('click', () => {
     );
   }
 });
+
+// Event listener for when the new game button is clicked
+newGameButton.addEventListener('click', initializeGame);
+
+// Reset the game state
+const resetGame = () => {
+  deck = [];
+  playerHand = [];
+  dealerHand = [];
+  playerScore = 0;
+  dealerScore = 0;
+  playerScoreHTML.innerText = playerScore;
+  dealerScoreHTML.innerText = dealerScore;
+  cardsContainerHTML.forEach(container => (container.innerHTML = ''));
+  drawCardButton.disabled = false;
+  standButton.disabled = false;
+};
 
 initializeGame();
