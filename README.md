@@ -100,6 +100,10 @@ npm run dev
 2. **Dealer's turn:** Once you've chosen to stand, the dealer will reveal their hand and draw cards until they reach 17 or bust.
 3. **Outcome:** If your hand beats the dealer's without going over 21, you win! Otherwise, the dealer wins.
 
+## Demo
+
+You can try the game here: [Blackjack](https://blackjack-21.netlify.app/)
+
 ## Contributing
 
 Contributions are always welcome!
