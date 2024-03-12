@@ -6,7 +6,7 @@ import {
   determineWinner,
   drawCard,
   renderHand,
-} from './usecases';
+} from './use-cases';
 
 //* Constants
 const suits = ['C', 'D', 'H', 'S']; // Define an array of card suits
