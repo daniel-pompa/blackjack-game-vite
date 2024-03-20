@@ -37,7 +37,7 @@ The game simulates a casino environment where you can play Blackjack against the
 │       └───📁 images/
 ├───📁 src/
 │   └───📁 blackjack/
-│       ├───📁 usecases/
+│       ├───📁 use-cases/
 │       └───📄 index.js
 ├───📄 index.html
 ├───📄 LICENSE
